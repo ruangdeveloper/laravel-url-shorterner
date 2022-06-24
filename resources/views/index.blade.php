@@ -22,10 +22,20 @@
                 <div class="card shadow mb-5">
                     <div class="card-body">
                         <div>
-                            <form action="" method="post">
+                            @if ($errors->any())
+                                <div class="alert alert-danger mb-3 pb-0">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                            <form action="{{ route('url.store') }}" method="post">
+                                @csrf
                                 <div class="mb-3">
                                     <input placeholder="Masukkan URL yang panjang ke sini" type="url"
-                                        class="form-control">
+                                        class="form-control" name="url">
                                 </div>
                                 <div class="text-end">
                                     <button type="submit" class="btn btn-primary">Perpendek</button>
@@ -34,12 +44,14 @@
                         </div>
                     </div>
                 </div>
-                <h6 class="mb-3">URL Pendek Kamu</h6>
-                <div class="card shadow">
-                    <div class="card-body">
-                        <input type="url" readonly class="form-control">
+                @if (session('result'))
+                    <h6 class="mb-3">URL Pendek Kamu</h6>
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <input value="{{ session('result') }}" type="url" readonly class="form-control">
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
         </div>
     </div>
